@@ -4,7 +4,7 @@
    <xsl:output method="text" encoding="UTF-8" indent="yes"/>
    <xsl:strip-space elements="*"/>
    
-   <xsl:variable name="Meteo" select="document('https://webetu.iutnc.univ-lorraine.fr/www/franco377u/interop/src/php')" />
+
 
    <!-- On démarre de la racine -->
    <xsl:template match="/"> 
