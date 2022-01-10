@@ -12,21 +12,12 @@
      <xsl:apply-templates />
    </xsl:template>
    
-   <xsl:template match="*">
-       <xsl:apply-templates select="@*"/>
+   <xsl:template match="previsions">
        <xsl:apply-templates />
    </xsl:template>
    
-   <xsl:template match="@*">
-     ATTRIBUT :
-     <xsl:value-of select="."/>  
-     <xsl:text>    </xsl:text>
-   </xsl:template>
-
-   <xsl:template match="text()">
-     FEUILLE :
-     <xsl:value-of select="."/>  
-     <xsl:text>    </xsl:text>
-   </xsl:template>
+   <xsl:template match="echeance">
+    <xsl:apply-templates />
+</xsl:template>
 
 </xsl:stylesheet>
