@@ -8,6 +8,7 @@
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
     <script type="text/javascript" >
+        //Affiche la carte centré sur la position en paramètre
         function afficherMap(lat, long) {
             console.log("display the map...");
             
@@ -31,7 +32,9 @@
 
     </div>
     
+    
     <?php
+        //Récupèration de la localisation de l'adresse de la mairie
         $address ="Mairie Notre dame des landes";
         $prepAddr = str_replace(' ','+',$address);
         $geocode=file_get_contents('https://api-adresse.data.gouv.fr/search/?q=Mairie+Notre+Dames+des+Landes'.$prepAddr) or die("Impossible d'acceder aux services de géolocalisation");
@@ -40,10 +43,9 @@
         $latitude = $output->features[0]->geometry->coordinates[1];
         $longitude = $output->features[0]->geometry->coordinates[0];
 
-        echo 'sah';
+        //création de la carte
         echo "<script type='text/javascript'>afficherMap(${latitude}, ${longitude});</script>";
-        //echo '<script type="text/javascript">afficherMap(1,2);</script>';
-
+       
     ?>
 
 </body>
