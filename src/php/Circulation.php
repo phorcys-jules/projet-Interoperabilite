@@ -19,9 +19,40 @@
                 center: [long, lat], // starting position [lng, lat]
                 zoom: 17 // starting zoom
             });
-
-            console.log(map.transform.center);
         }
+
+        function createPoint(lat, long, titre) {
+          console.log("place point...");
+
+          const geojson = {
+              type: 'FeatureCollection',
+              features: [
+                {
+                  type: 'Feature',
+                  geometry: {
+                    type: 'Point',
+                    coordinates: [-77.032, 38.913]
+                  },
+                  properties: {
+                    title: titre,
+                    description: 'Washington, D.C.'
+                  }
+                }
+              ]
+            };
+
+            // add markers to map
+            for (const feature of geojson.features) {
+              // create a HTML element for each feature
+              const el = document.createElement('div');
+              el.className = 'marker';
+
+              // make a marker for each feature and add to the map
+              new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+            }
+        }
+            
+            
 
     </script>
 </head>
@@ -42,9 +73,11 @@
 
         $latitude = $output->features[0]->geometry->coordinates[1];
         $longitude = $output->features[0]->geometry->coordinates[0];
+        $titre = "le point point";
 
         //création de la carte
         echo "<script type='text/javascript'>afficherMap(${latitude}, ${longitude});</script>";
+        echo "<script type='text/javascript'>createPoint(${latitude}, ${longitude}, ${titre});</script>";
        
     ?>
 
