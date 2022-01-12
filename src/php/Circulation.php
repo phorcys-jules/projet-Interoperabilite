@@ -24,7 +24,7 @@
         }
 
         function createPoint(lat, long, p_titre, p_descritpion) {
-          console.log("place point...");
+          console.log("place point...",lat,long, p_titre,p_descritpion);
 
           const geojson = {
               type: 'FeatureCollection',
@@ -75,13 +75,34 @@
 
         $latitude = $output->features[0]->geometry->coordinates[1];
         $longitude = $output->features[0]->geometry->coordinates[0];
-        //$titre = 'le point point';
-        //$description = 'ceci est la description';
+        $titre = 'le point point';
+        $description = 'ceci est la description';
 
         //création de la carte
         echo "<script type='text/javascript'>afficherMap(${latitude}, ${longitude});</script>";
-        echo "<script type='text/javascript'>createPoint(${latitude}, ${longitude}, 'le point point', 'ceci est la description') ;</script>";
-       
+
+
+
+        //placement des points : 
+        const INFO_TRAFFIC= 'https://data.loire-atlantique.fr/api/records/1.0/search/?dataset=224400028_info-route-departementale&q=&facet=nature&facet=type&facet=datepublication&facet=ligne1&facet=ligne2';
+
+        $xmldata = file_get_contents(INFO_TRAFFIC) or die("Impossible de charger la météo");
+        $output = json_decode($xmldata);
+        //var_dump($output->records);
+        foreach ($output->records as $info) {
+            $info = $info->fields;
+            $lat = $info->localisation[0];
+            $lon = $info->localisation[1];
+            $titre = "'".$info->nature."'";
+            $desc = "'".$info->type."'";
+            $param = "(". $lat. $lon. $titre. $desc. ")";
+            //$param = $lat. $lon. $titre. $desc;
+            echo "<script type='text/javascript'>createPoint($lat, $lon, $titre, $desc) ;</script>";
+            //$format = '<script type="text/javascript">createPoint(%d, %d, %s, %s) ;</script>';
+        
+           // echo sprintf($format, $lat, $lon, $titre, $desc);
+        }
+
     ?>
 
 </body>
