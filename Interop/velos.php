@@ -1,8 +1,8 @@
 <?php
 
 /*
-    Dans un premier temps, en local, j'utilise $adresseIP = "176.134.136.84" (IP trouvé grâce à https://ipapi.co/).
-    Mais j'utilise $adresseIP = $_SERVER['REMOTE_ADDR'] lorsque mon projet est stocké sur un serveur, comme Webetu.
+    Dans un premier temps, en local, on utilise $adresseIP = "176.134.136.84" (IP trouvé grâce à https://ipapi.co/).
+    Mais on utilise $adresseIP = $geolocData->query avant de deployer le projet sur un serveur, comme Webetu.
 */
     
 
