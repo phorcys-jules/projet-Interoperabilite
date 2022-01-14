@@ -85,7 +85,7 @@
   $coo = $geolocData->lat . "," . $geolocData->lon;
   $dep = $geolocData->zip;
   $dep = substr($dep,0, 2);
-  echo $dep;
+  //echo $dep;
   echo 'VOUS ETES LOCALISES DANS LE DEPARTEMENT : '.$dep.'<br>';
 
 
