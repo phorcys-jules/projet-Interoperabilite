@@ -16,8 +16,12 @@
 </head>
 
 <body>
+   <h1>Les différents points de difficultés de circulation dans le département de Loire Atlantique</h1> 
+        
   <div id="map">
   </div>
+
+  <h1 id="titrecovid">Quelques infos concernant le COVID-19 dans votre département</h1> 
 
   <div id ="graph">
     <canvas id="myChart"></canvas>
@@ -81,7 +85,7 @@
   $coo = $geolocData->lat . "," . $geolocData->lon;
   $dep = $geolocData->zip;
   $dep = substr($dep,0, 2);
-  echo '<div> Vous avez été localisé dans le departement '.$dep.'<br></div>';
+  echo 'VOUS ETES LOCALISES DANS LE DEPARTEMENT : '.$dep.'<br>';
 
 
   $filename = 'https://www.data.gouv.fr/fr/datasets/r/5c4e1452-3850-4b59-b11c-3dd51d7fb8b5';
@@ -110,6 +114,21 @@
   // close the file
   fclose($f);
   ?>
+  <div id="endcontent">
+    <h4>Les différentes API utilisés :</h4>
+      <ul>
+            <li><a href="http://ip-api.com/xml/?lang=fr">http://ip-api.com/xml/?lang=fr</a></li>
+            <li><a href="https://www.data.gouv.fr/fr/datasets/r/5c4e1452-3850-4b59-b11c-3dd51d7fb8b5">https://www.data.gouv.fr/fr/datasets/r/5c4e1452-3850-4b59-b11c-3dd51d7fb8b5</a></li>
+            <li><a href="https://api.mapbox.com/styles/v1/">https://api.mapbox.com/styles/v1/</a></li>
+            <li><a href="https://data.loire-atlantique.fr/api/records/1.0/search/?dataset=224400028_info-route-departementale&q=&facet=nature&facet=type&facet=datepublication&facet=ligne1&facet=ligne2">https://data.loire-atlantique.fr/api/records/1.0/search/?dataset=224400028_info-route-departementale&q=&facet=nature&facet=type&facet=datepublication&facet=ligne1&facet=ligne2</a></li>
+            <li><a href="https://api-adresse.data.gouv.fr/search/?q=Mairie+Notre+Dames+des+Landes">https://api-adresse.data.gouv.fr/search/?q=Mairie+Notre+Dames+des+Landes</a></li>
+            <li><a href="https://cdn.jsdelivr.net/npm/chart.js">https://cdn.jsdelivr.net/npm/chart.js</a></li>
+
+      </ul>
+    <footer>
+            WILT Lilian | FRANCOIS Jules | MANGENOT Alex - LP CIASIE 2 / Interopérabilité
+    </footer>
+  </div>
 </body>
 
 <script>
