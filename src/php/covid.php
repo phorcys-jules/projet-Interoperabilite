@@ -27,7 +27,7 @@ if ($f === false) {
 	die('Cannot open the file ' . $filename);
 }
 
-// read each line in CSV file at a time
+//parcour csv
 while (($row = fgetcsv($f)) !== false) {
 	if ($row[0] == '54') { 
 		//date, taux incidence, nb positif
@@ -35,7 +35,7 @@ while (($row = fgetcsv($f)) !== false) {
 	}
 }
 
-var_dump($data);
+//var_dump($data);
 
 // close the file
 fclose($f);

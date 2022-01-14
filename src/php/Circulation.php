@@ -25,7 +25,7 @@
     }
 
     function createPoint(lat, long, p_titre, p_descritpion) {
-      console.log("place point...", lat, long, p_titre, p_descritpion);
+      //console.log("place point...", lat, long, p_titre, p_descritpion);
 
       const geojson = {
         type: 'FeatureCollection',
@@ -52,42 +52,30 @@
         new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
       }
     }
+    let labels = [];
+    let datas = [];
+    let datas2 = [];
+    
+    function configChart(param) {
+      param.forEach(function(item){
+        //date
+        labels.push(item[0]);
+        //taux inci
+        datas.push(item[1]);
+        //nb cas >0
+        datas2.push(item[2]);
 
-
-    const labels = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-    ];
-    const data = {
-      labels: labels,
-      datasets: [{
-        label: 'My First dataset',
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(255, 99, 132)',
-        data: [0, 10, 5, 2, 20, 30, 45],
-      }]
-    };
-    const config = {
-      type: 'line',
-      data,
-      options: {}
-    };
-    // === include 'setup' then 'config' above ===
+      });
+    }
   </script>
 </head>
 <link rel="stylesheet" href="../css/style.css">
 
 <body>
   <div id="map">
-
-
   </div>
 
-  <div>
+  <div id ="graph">
     <canvas id="myChart"></canvas>
   </div>
 
@@ -104,7 +92,7 @@
   $description = 'ceci est la description';
 
   //création de la carte
-  //echo "<script type='text/javascript'>afficherMap(${latitude}, ${longitude});</script>";
+  echo "<script type='text/javascript'>afficherMap(${latitude}, ${longitude});</script>";
 
 
 
@@ -122,17 +110,116 @@
     $desc = "'" . $info->type . "'";
     $param = "(" . $lat . $lon . $titre . $desc . ")";
     //$param = $lat. $lon. $titre. $desc;
-    //echo "<script type='text/javascript'>createPoint($lat, $lon, $titre, $desc) ;</script>";
-    //$format = '<script type="text/javascript">createPoint(%d, %d, %s, %s) ;</script>';
+    echo "<script type='text/javascript'>createPoint($lat, $lon, $titre, $desc) ;</script>";
 
-    // echo sprintf($format, $lat, $lon, $titre, $desc);
   }
 
   ?>
 
+
+<?php
+  //graphe covid
+
+  //localisation avec proxi
+  /*
+  $opts = array('http' => array('proxy'=> 'tcp://127.0.0.1:8080', 'request_fulluri'=> true));
+  $context = stream_context_create($opts);
+  stream_context_set_default($opts);
+  */
+
+  // Récupération des données de géolocalisation
+  $ipURI = "http://ip-api.com/xml/?lang=fr";
+  $geolocData = simplexml_load_string(file_get_contents($ipURI));
+  $coo = $geolocData->lat . "," . $geolocData->lon;
+  $dep = $geolocData->zip;
+  $dep = substr($dep,0, 2);
+  echo 'Vous avez été localisé dans le departement '.$dep.'<br>';
+
+
+  $filename = 'https://www.data.gouv.fr/fr/datasets/r/5c4e1452-3850-4b59-b11c-3dd51d7fb8b5';
+  $data = [];
+
+  // open the file
+  $f = fopen($filename, 'r');
+
+  if ($f === false) {
+    die('Cannot open the file ' . $filename);
+  }
+
+  //parcourt csv
+  while (($row = fgetcsv($f)) !== false) {
+    if ($row[0] == '54') { 
+      //date, taux incidence, nb positif
+      array_push($data,[$row[1], $row[6], $row[14]]);
+    }
+  }
+  $data = json_encode($data);
+  echo "<script type='text/javascript'>configChart($data) ;</script>";
+
+
+  //var_dump($data);
+
+  // close the file
+  fclose($f);
+  ?>
 </body>
 
 <script>
+     
+    const data = {
+      labels: labels,
+      datasets: [{
+        label: "Taux d'incidencede de la pandémie de Covid-19 pour 100 000 habitants",
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: datas,
+        yAxisID: 'y',
+      },
+      {
+        label: "Nombre de nouvelles hospitalisations",
+        backgroundColor: 'rgb(0, 99, 132)',
+        borderColor: 'rgb(0, 99, 132)',
+        data: datas2,
+        yAxisID: 'y1',
+      }]
+    };
+    const config = {
+      type: 'line',
+      data: data,
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        stacked: false,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Information pandémie covid 19 dans votre département'
+          }
+        },
+        scales: {
+          y: {
+            type: 'linear',
+            display: true,
+            position: 'left',
+          },
+          y1: {
+            type: 'linear',
+            display: true,
+            position: 'right',
+            fill:true,
+
+            // grid line settings
+            grid: {
+              drawOnChartArea: false, // only want the grid lines for one axis to show up
+            },
+          },
+        }
+      },
+    };
+
   var myChart = new Chart(
     document.getElementById('myChart'),
     config
