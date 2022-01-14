@@ -4,15 +4,24 @@
     Dans un premier temps, en local, j'utilise $adresseIP = "176.134.136.84" (IP trouvé grâce à https://ipapi.co/).
     Mais j'utilise $adresseIP = $_SERVER['REMOTE_ADDR'] lorsque mon projet est stocké sur un serveur, comme Webetu.
 */
-    stream_context_set_default(array('http' => array('proxy' => 'tcp://www-cache:3128', 'request_fulluri' => true), 'ssl' => array('verify_peer' => false, 'verify_peer_name' => false)));
+    
+
+/*
+* Enlever prochain commentaire avant de deployer sur serveur, laisser en commentaire pour fonctionner en local
+*/
+    //stream_context_set_default(array('http' => array('proxy' => 'tcp://www-cache:3128', 'request_fulluri' => true), 'ssl' => array('verify_peer' => false, 'verify_peer_name' => false)));
 
 
     // Récupération des données de géolocalisation
     $ipURI = "http://ip-api.com/xml/?lang=fr";
     $geolocData = simplexml_load_string(file_get_contents($ipURI))->query;
-    $adresseIP = $geolocData->query;
-    //$adresseIP = "176.134.136.84";
-    //$adresseIP = $_SERVER['REMOTE_ADDR'];
+
+/*
+* Avant de deployer sur serveur, enlever commentaire sur ligne 24 et mettre commentaire sur ligne 23
+*/
+
+    //$adresseIP = $geolocData->query;
+    $adresseIP = "176.134.136.84";
     
     $opts1 = array('http' =>
         array(

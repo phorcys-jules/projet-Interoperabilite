@@ -28,8 +28,15 @@
   </div>
 
   <?php
-  stream_context_set_default(array('http' => array('proxy' => 'tcp://www-cache:3128', 'request_fulluri' => true), 'ssl' => array('verify_peer' => false, 'verify_peer_name' => false)));
+  
   //Récupèration de la localisation de l'adresse de la mairie
+
+  /*
+  * Enlever prochain commentaire avant de deployer sur serveur
+  */
+
+  //stream_context_set_default(array('http' => array('proxy' => 'tcp://www-cache:3128', 'request_fulluri' => true), 'ssl' => array('verify_peer' => false, 'verify_peer_name' => false)));
+  
   $address = "Mairie Notre dame des landes";
   $prepAddr = str_replace(' ', '+', $address);
   $geocode = file_get_contents('https://api-adresse.data.gouv.fr/search/?q=Mairie+Notre+Dames+des+Landes') or die("Impossible d'acceder aux services de géolocalisation");
@@ -50,7 +57,6 @@
 
   $xmldata = file_get_contents(INFO_TRAFFIC) or die("Impossible de charger la météo");
   $output = json_decode($xmldata);
-  //var_dump($output->records);
   foreach ($output->records as $info) {
     $info = $info->fields;
     $lat = $info->localisation[0];
@@ -58,7 +64,6 @@
     $titre = "'" . $info->nature . "'";
     $desc = "'" . $info->type . "'";
     $param = "(" . $lat . $lon . $titre . $desc . ")";
-    //$param = $lat. $lon. $titre. $desc;
     echo "<script type='text/javascript'>createPoint($lat, $lon, $titre, $desc) ;</script>";
 
   }
@@ -70,22 +75,22 @@
   //graphe covid
 
   //localisation avec proxi
-  /*
-  $opts = array('http' => array('proxy'=> 'tcp://127.0.0.1:8080', 'request_fulluri'=> true, 'ssl' => array('verify_peer' => false, 'verify_peer_name' => false)));
-  $context = stream_context_create($opts);
-  stream_context_set_default($opts);
-  */
-  stream_context_set_default(array('http' => array('proxy' => 'tcp://www-cache:3128', 'request_fulluri' => true), 'ssl' => array('verify_peer' => false, 'verify_peer_name' => false)));
 
-  
 
   // Récupération des données de géolocalisation
+
+  /*
+  * Enlever prochain commentaire avant de deployer sur serveur
+  */
+
+
+  //stream_context_set_default(array('http' => array('proxy' => 'tcp://www-cache:3128', 'request_fulluri' => true), 'ssl' => array('verify_peer' => false, 'verify_peer_name' => false)));
+
   $ipURI = "http://ip-api.com/xml/?lang=fr";
   $geolocData = simplexml_load_string(file_get_contents($ipURI));
   $coo = $geolocData->lat . "," . $geolocData->lon;
   $dep = $geolocData->zip;
   $dep = substr($dep,0, 2);
-  //echo $dep;
   echo 'VOUS ETES LOCALISES DANS LE DEPARTEMENT : '.$dep.'<br>';
 
 
@@ -110,7 +115,6 @@
   echo "<script type='text/javascript'>configChart($data) ;</script>";
 
 
-  //var_dump($data);
 
   // close the file
   fclose($f);
