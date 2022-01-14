@@ -1,0 +1,22 @@
+<!ELEMENT prévisions (request_state, source, message, request_time, request_key, model_run, echeance*)>
+<!ELEMENT echeance (température, pression, pluie_interval, pluie_convective, humidite, vent_moyen, vent_rafales, vent_direction, iso_zero, risque_neige, cape, nebulosite)>
+<!ELEMENT request_state(#PCDATA)>
+<!ELEMENT source(#PCDATA)>
+<!ELEMENT message(#PCDATA)>
+<!ELEMENT request_time(#PCDATA)>
+<!ELEMENT Duree (#PCDATA)>
+<!ELEMENT request_key(#PCDATA)>
+<!ELEMENT model_run(#PCDATA)>
+<!ELEMENT echeance(#PCDATA)>
+<!ELEMENT température(#PCDATA)>
+<!ELEMENT pression(#PCDATA)>
+<!ELEMENT pluie_interval(#PCDATA)>
+<!ELEMENT pluie_convective(#PCDATA)>
+<!ELEMENT humidite(#PCDATA)>
+<!ELEMENT vent_moyen(#PCDATA)>
+<!ELEMENT vent_rafales(#PCDATA)>
+<!ELEMENT vent_direction(#PCDATA)>
+<!ELEMENT iso_zero(#PCDATA)>
+<!ELEMENT risque_neige(#PCDATA)>
+<!ELEMENT cape(#PCDATA)>
+<!ELEMENT nebulosite(#PCDATA)>
