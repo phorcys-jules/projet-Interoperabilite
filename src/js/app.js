@@ -17,3 +17,9 @@ function afficherMap(lat, long) {
 }
 
 console.log("app.js");
+
+let t = [];
+
+t.forEach(function name(params) {
+    
+})
