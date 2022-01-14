@@ -4,7 +4,14 @@
     Dans un premier temps, en local, j'utilise $adresseIP = "176.134.136.84" (IP trouvé grâce à https://ipapi.co/).
     Mais j'utilise $adresseIP = $_SERVER['REMOTE_ADDR'] lorsque mon projet est stocké sur un serveur, comme Webetu.
 */
-    $adresseIP = "176.134.136.84";
+    stream_context_set_default(array('http' => array('proxy' => 'tcp://www-cache:3128', 'request_fulluri' => true), 'ssl' => array('verify_peer' => false, 'verify_peer_name' => false)));
+
+
+    // Récupération des données de géolocalisation
+    $ipURI = "http://ip-api.com/xml/?lang=fr";
+    $geolocData = simplexml_load_string(file_get_contents($ipURI))->query;
+    $adresseIP = $geolocData->query;
+    //$adresseIP = "176.134.136.84";
     //$adresseIP = $_SERVER['REMOTE_ADDR'];
     
     $opts1 = array('http' =>
@@ -25,23 +32,24 @@
     );
     $context1 = stream_context_create($opts1);
     $context2 = stream_context_create($opts2);
-    
-    $velo = simplexml_load_string(file_get_contents("http://www.velostanlib.fr/service/carto", false, $context2));    
+
+
+    $velo = simplexml_load_string(file_get_contents("http://www.velostanlib.fr/service/carto", false)); //$context2    
     
     $list = array();
     for ($i=1; $i < sizeof($velo->markers->marker) ; $i++) {
-        $list[]= simplexml_load_string(file_get_contents("http://www.velostanlib.fr/service/stationdetails/nancy/".$i, false, $context2));
+        $list[]= simplexml_load_string(file_get_contents("http://www.velostanlib.fr/service/stationdetails/nancy/".$i, false)); //$context2
     }
     $jsdispo = json_encode($list);
     $jsarray = json_encode($velo->markers);
     echo '<div id="stations" style="display: none;">' . $jsarray .' </div>';
     echo '<div id="dispodata" style="display: none;">' . $jsdispo .' </div>';
 
-    $json = file_get_contents('http://ip-api.com/json/', false, $context1);
+    $json = file_get_contents('http://ip-api.com/json/', false); //$context1
     $result = json_decode($json, true);
     $latitude = $result['lat'];
     $longitude = $result['lon'];
-    $xml = file_get_contents('https://www.infoclimat.fr/public-api/gfs/xml?_ll='. $latitude .','. $longitude .'&_auth=ARsDFFIsBCZRfFtsD3lSe1Q8ADUPeVRzBHgFZgtuAH1UMQNgUTNcPlU5VClSfVZkUn8AYVxmVW0Eb1I2WylSLgFgA25SNwRuUT1bPw83UnlUeAB9DzFUcwR4BWMLYwBhVCkDb1EzXCBVOFQoUmNWZlJnAH9cfFVsBGRSPVs1UjEBZwNkUjIEYVE6WyYPIFJjVGUAZg9mVD4EbwVhCzMAMFQzA2JRMlw5VThUKFJiVmtSZQBpXGtVbwRlUjVbKVIuARsDFFIsBCZRfFtsD3lSe1QyAD4PZA%3D%3D&_c=19f3aa7d766b6ba91191c8be71dd1ab2', false, $context2);
+    $xml = file_get_contents('https://www.infoclimat.fr/public-api/gfs/xml?_ll='. $latitude .','. $longitude .'&_auth=ARsDFFIsBCZRfFtsD3lSe1Q8ADUPeVRzBHgFZgtuAH1UMQNgUTNcPlU5VClSfVZkUn8AYVxmVW0Eb1I2WylSLgFgA25SNwRuUT1bPw83UnlUeAB9DzFUcwR4BWMLYwBhVCkDb1EzXCBVOFQoUmNWZlJnAH9cfFVsBGRSPVs1UjEBZwNkUjIEYVE6WyYPIFJjVGUAZg9mVD4EbwVhCzMAMFQzA2JRMlw5VThUKFJiVmtSZQBpXGtVbwRlUjVbKVIuARsDFFIsBCZRfFtsD3lSe1QyAD4PZA%3D%3D&_c=19f3aa7d766b6ba91191c8be71dd1ab2', false); //$context2
     $obj_xml = simplexml_load_string($xml);
     $xsl = new DOMDocument;
     $xsl->load('./xsl/meteo.xsl');

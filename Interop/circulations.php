@@ -24,10 +24,11 @@
   </div>
 
   <?php
+  stream_context_set_default(array('http' => array('proxy' => 'tcp://www-cache:3128', 'request_fulluri' => true), 'ssl' => array('verify_peer' => false, 'verify_peer_name' => false)));
   //Récupèration de la localisation de l'adresse de la mairie
   $address = "Mairie Notre dame des landes";
   $prepAddr = str_replace(' ', '+', $address);
-  $geocode = file_get_contents('https://api-adresse.data.gouv.fr/search/?q=Mairie+Notre+Dames+des+Landes' . $prepAddr) or die("Impossible d'acceder aux services de géolocalisation");
+  $geocode = file_get_contents('https://api-adresse.data.gouv.fr/search/?q=Mairie+Notre+Dames+des+Landes') or die("Impossible d'acceder aux services de géolocalisation");
   $output = json_decode($geocode);
 
   $latitude = $output->features[0]->geometry->coordinates[1];
@@ -66,18 +67,21 @@
 
   //localisation avec proxi
   /*
-  $opts = array('http' => array('proxy'=> 'tcp://127.0.0.1:8080', 'request_fulluri'=> true));
+  $opts = array('http' => array('proxy'=> 'tcp://127.0.0.1:8080', 'request_fulluri'=> true, 'ssl' => array('verify_peer' => false, 'verify_peer_name' => false)));
   $context = stream_context_create($opts);
   stream_context_set_default($opts);
   */
+  stream_context_set_default(array('http' => array('proxy' => 'tcp://www-cache:3128', 'request_fulluri' => true), 'ssl' => array('verify_peer' => false, 'verify_peer_name' => false)));
+
+  
 
   // Récupération des données de géolocalisation
   $ipURI = "http://ip-api.com/xml/?lang=fr";
-  $geolocData = simplexml_load_string(file_get_contents($ipURI));
+  $geolocData = simplexml_load_string(file_get_contents($ipURI))->query;
   $coo = $geolocData->lat . "," . $geolocData->lon;
   $dep = $geolocData->zip;
   $dep = substr($dep,0, 2);
-  echo 'Vous avez été localisé dans le departement '.$dep.'<br>';
+  echo '<div> Vous avez été localisé dans le departement '.$dep.'<br></div>';
 
 
   $filename = 'https://www.data.gouv.fr/fr/datasets/r/5c4e1452-3850-4b59-b11c-3dd51d7fb8b5';
