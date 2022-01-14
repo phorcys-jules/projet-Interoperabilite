@@ -1,12 +1,13 @@
 # Projet Interoperabilite
-Projet Interoperabilite LP Ciasie / IUT Nancy Charlemagne / François Jules, Mangenot Alex, Wilt Lilian
+
+:sparkles:  Projet Interoperabilite LP Ciasie / IUT Nancy Charlemagne / François Jules, Mangenot Alex, Wilt Lilian      :sparkles:	
 
 Retrouvez le projet directement sur le serveur :
 - https://webetu.iutnc.univ-lorraine.fr/www/wilt2u/Interop/circulations.php
 
 - https://webetu.iutnc.univ-lorraine.fr/www/wilt2u/Interop/velos.php
 
-INDICATIONS :
+:warning:   INDICATIONS :     :warning:	
 
 - Le projet tel qu'il est dans le dépôt est configuré pour fonctionner en local, avant de déployer sur serveur, il est impératif de suivre les indications laissées en commentaires sur les fichier circulations.php (ligne 34 & 82) et velos.php (lignes 3, 9 & 19).
 
