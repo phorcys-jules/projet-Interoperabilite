@@ -81,10 +81,11 @@
 
   // Récupération des données de géolocalisation
   $ipURI = "http://ip-api.com/xml/?lang=fr";
-  $geolocData = simplexml_load_string(file_get_contents($ipURI))->query;
+  $geolocData = simplexml_load_string(file_get_contents($ipURI));
   $coo = $geolocData->lat . "," . $geolocData->lon;
   $dep = $geolocData->zip;
   $dep = substr($dep,0, 2);
+  echo $dep;
   echo 'VOUS ETES LOCALISES DANS LE DEPARTEMENT : '.$dep.'<br>';
 
 
@@ -100,7 +101,7 @@
 
   //parcourt csv
   while (($row = fgetcsv($f)) !== false) {
-    if ($row[0] == '54') { 
+    if ($row[0] == $dep) { 
       //date, taux incidence, nb positif
       array_push($data,[$row[1], $row[6], $row[14]]);
     }
