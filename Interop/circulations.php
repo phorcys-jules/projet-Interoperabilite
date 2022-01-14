@@ -7,12 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Circulation</title>
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/circulations.css">
+  <script src="./js/circulations.js"></script>
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="./js/circulations.js"></script>
+
 
 </head>
-<link rel="stylesheet" href="./css/style.css">
 
 <body>
   <div id="map">

@@ -8,7 +8,7 @@ function afficherMap(lat, long) {
     container: 'map', // container ID
     style: 'mapbox://styles/mapbox/streets-v11', // style URL
     center: [long, lat], // starting position [lng, lat]
-    zoom: 17 // starting zoom
+    zoom: 8 // starting zoom
   });
 }
 
@@ -40,6 +40,8 @@ function createPoint(lat, long, p_titre, p_descritpion) {
     new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
   }
 }
+
+
 let labels = [];
 let datas = [];
 let datas2 = [];

@@ -93,7 +93,7 @@
             <li><a href="http://www.velostanlib.fr/service/stationdetails/nancy/">http://www.velostanlib.fr/service/stationdetails/nancy/</a></li>
         </ul>
         <footer>
-            WILT LILIAN - LP CIASIE 2 / Interopérabilité
+            WILT Lilian | FRANCOIS Jules | MANGENOT Alex - LP CIASIE 2 / Interopérabilité
         </footer>
     </body>
 </html>
